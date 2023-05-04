@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="product-gallery">
+      <div class="thumbnails-container">
+        <div class="thumbnails">
+          <img src="img/1.jpg" alt="Product Image" />
+          <img src="img/2.jpg" alt="Product Image" />
+          <img src="img/3.jpg" alt="Product Image" />
+          <img src="img/4.jpg" alt="Product Image" />
+          <img src="img/6.jpg" alt="Product Image" />
+          <img src="img/7.jpg" alt="Product Image" />
+          <img src="img/8.jpg" alt="Product Image" />
+        </div>
+      </div>
+      <div class="image-container">
+        <img src="img/1.jpg" alt="Product Image" class="main-image" />
+        <div class="buttons">
+          <button class="prev-btn">Previous</button>
+          <button class="next-btn">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const thumbnails = document.querySelectorAll(".thumbnails img");
+      const mainImage = document.querySelector(".main-image");
+      const prevBtn = document.querySelector(".prev-btn");
+      const nextBtn = document.querySelector(".next-btn");
+
+      let currentImage = 0;
+
+      function changeImage(index) {
+        mainImage.src = thumbnails[index].src;
+        currentImage = index;
+      }
+
+      function disablePrevButton() {
+        prevBtn.disabled = true;
+        prevBtn.style.opacity = 0.5;
+      }
+
+      function enablePrevButton() {
+        prevBtn.disabled = false;
+        prevBtn.style.opacity = 1;
+      }
+
+      function disableNextButton() {
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = 0.5;
+      }
+
+      function enableNextButton() {
+        nextBtn.disabled = false;
+        nextBtn.style.opacity = 1;
+      }
+
+      thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener("click", () => {
+          changeImage(index);
+          if (index === 0) {
+            disablePrevButton();
+          } else {
+            enablePrevButton();
+          }
+          if (index === thumbnails.length - 1) {
+            disableNextButton();
+          } else {
+            enableNextButton();
+          }
+        });
+      });
+
+      prevBtn.addEventListener("click", () => {
+        if (currentImage === 0) {
+          disablePrevButton();
+        } else {
+          currentImage--;
+          changeImage(currentImage);
+          enableNextButton();
+        }
+        if (currentImage === 0) {
+          disablePrevButton();
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (currentImage === thumbnails.length - 1) {
+          disableNextButton();
+        } else {
+          currentImage++;
+          changeImage(currentImage);
+          enablePrevButton();
+        }
+        if (currentImage === thumbnails.length - 1) {
+          disableNextButton();
+        }
+      });
+
+      disablePrevButton();
+    </script>
+  </body>
+</html>
